@@ -214,7 +214,7 @@ namespace Compiler
                     if (text[i] == '\n')
                     {
                         //don't include the new line character in the value part
-                        token = new Token(ClassPart.STRING_VALUE, text.Substring(0, i - 1), lineNumber);
+                        token = new Token(ClassPart.INVALID, text.Substring(0, i - 1), lineNumber);
                         break;
                     }
                     //find the end of string and also deal the escape condition
