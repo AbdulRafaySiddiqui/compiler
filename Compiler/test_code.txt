@@ -1,5 +1,12 @@
-/* string a = "ah//[]mer"//ahmer
-int a =0[]{}||;
-bool = true ;
-float = + 0.6 
-.,/.,
+double a = .6;
+__hello;_hello;hello__;he__llo;he_llo___=;
+//Remove spaces,tabs and new line from front of string and increase the current index
+                var items = TrimStart(text);
+                line += items.Item3;
+                var count = items.Item1 + items.Item2 + items.Item3;
+                index += count;
+                text = text.Substring(count);
+
+                //if we are at the end of text
+                if (string.IsNullOrEmpty(text))
+                    break;

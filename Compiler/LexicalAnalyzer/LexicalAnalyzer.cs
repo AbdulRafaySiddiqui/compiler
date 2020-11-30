@@ -70,7 +70,7 @@ namespace Compiler
 
                 if (token == null)
                 {
-                    //now we have to break the word in order to validate it as int,string,double, bool or identifier
+                    //now we have to break the word in order to validate it as arithmetic operators or identifier
                     var word = BreakWord(text);
                     token = IsInt(word, line);
                     if (token == null)
@@ -168,8 +168,20 @@ namespace Compiler
             {
                 if (text.StartsWith(punctuator))
                 {
-                    var classPart = Grammar.Punctuators[punctuator];
-                    token = new Token(classPart, punctuator, lineNumber);
+                    //don't take DOT as a punctuator if it has preceding digits, cause it will be a double constant in that case
+                    if (text[0] == '.')
+                    {
+                        if (text.Length > 1 && !Regex.Match(text[1].ToString(), "^[0-9]$").Success)
+                        {
+                            token = new Token(Grammar.Punctuators[punctuator], punctuator, lineNumber);
+                            return token;
+                        }
+                    }
+                    else
+                    {
+                        var classPart = Grammar.Punctuators[punctuator];
+                        token = new Token(classPart, punctuator, lineNumber);
+                    }
                 }
             }
             return token;
@@ -220,7 +232,7 @@ namespace Compiler
                     //find the end of string and also deal the escape condition
                     if (text[i] == '"' && text[i - 1] != '\\')
                     {
-                        token = new Token(ClassPart.STRING_VALUE, text.Substring(0, i + 1), lineNumber);
+                        token = new Token(ClassPart.STRING_CONSTANT, text.Substring(0, i + 1), lineNumber);
                         break;
                     }
                     //if text ends and we don't find the ending quote for string, means string is not closed
@@ -288,7 +300,7 @@ namespace Compiler
         {
             if (Regex.Match(word, "^[+-]?[0-9]+$").Success)
             {
-                return new Token(ClassPart.INT_VALUE, word, lineNumber);
+                return new Token(ClassPart.INT_CONSTANT, word, lineNumber);
             }
             return null;
         }
@@ -297,7 +309,7 @@ namespace Compiler
         {
             if (Regex.Match(word, "^[+-]?[0-9]*.[0-9]+$").Success)
             {
-                return new Token(ClassPart.DOUBLE_VALUE, word, lineNumber);
+                return new Token(ClassPart.DOUBLE_CONSTANT, word, lineNumber);
             }
             return null;
         }
@@ -306,14 +318,14 @@ namespace Compiler
         {
             if (word == "true" || word == "false")
             {
-                return new Token(ClassPart.BOOL, word, lineNumber);
+                return new Token(ClassPart.BOOL_CONSTANT, word, lineNumber);
             }
             return null;
         }
 
         private Token IsIdentifier(string word, int lineNumber)
         {
-            if (Regex.Match(word, "^[_]?[A-Za-z]+[A-Za-z0-9]*$").Success)
+            if (Regex.Match(word, "^[_]?[A-Za-z]+[_]*[A-Za-z0-9]*[_]*$").Success)
             {
                 return new Token(ClassPart.IDENTIFIER, word, lineNumber);
             }

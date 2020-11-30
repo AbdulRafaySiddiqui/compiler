@@ -15,9 +15,7 @@
         CLASS,
         CATCH,
         ELSE,
-        FALSE,
         DEFAULT,
-        TRUE,
         IF,
         FOR,
         FINALLY,
@@ -37,16 +35,13 @@
         SET,
 
         //DATA TYPES
-        INT,
-        STRING,
-        DOUBLE,
-        BOOL,
-
-        //DATA TYPE VALUES
-        INT_VALUE,
-        DOUBLE_VALUE,
-        STRING_VALUE,
-        BOOL_VALUE,
+        DATA_TYPE,
+       
+        //CONSTANTS
+        INT_CONSTANT,
+        DOUBLE_CONSTANT,
+        STRING_CONSTANT,
+        BOOL_CONSTANT,
 
         //PUNCTUATORS
         OPENING_PARANTHESES,
@@ -61,36 +56,24 @@
         COLON,
         SEMI_COLON,
         COMMA,
+        DOT,
 
         //ARITHMETIC OPERATORS
-        PLUS,
-        MINUS,
-        MULTIPLY,
-        DIVIDE,
-        MODULUS,
+        PLUS_MINUS,
+        MULTIPLY_DIVIDE_MODULUS,
 
         //ASSIGNMENT OPERATORS
-        PLUS_EQUAL,
-        MINUS_EQUAL,
-        DIVIDE_EQUAL,
-        MULTIPLY_EQUAL,
-        MODULUS_EQUAL,
+        COMPOUND_EQUAL,
         EQUAL,
 
         //INCREMENT/DECREMENT OPERATOR
-        INCREMENT,
-        DECREMENT,
+        INCREMENT_DECREMENT,
 
         //LOGICAL OPERATOS
         AND,
         OR,
         NOT,
-        LESS_EQUAL,
-        GREATER_EQUAL,
-        NOT_EQUAL,
-        EQUAL_EQUAL,
-        LESS_THAN,
-        GREATER_THAN,
+        RELATIONAL_OPERATOR,
 
         //COMMENTS
         SINGLE_LINE_COMMENT,

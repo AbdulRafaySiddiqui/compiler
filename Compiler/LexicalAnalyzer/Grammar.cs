@@ -24,9 +24,9 @@ namespace Compiler
             {"class", ClassPart.CLASS},
             {"catch", ClassPart.CATCH},
             {"else", ClassPart.ELSE },
-            {"false", ClassPart.FALSE},
+            //{"false", ClassPart.FALSE},
             {"default", ClassPart.DEFAULT},
-            {"true", ClassPart.TRUE},
+            //{"true", ClassPart.TRUE},
             {"if",   ClassPart.IF},
             {"for",  ClassPart.FOR},
             {"finally", ClassPart.FINALLY},
@@ -46,10 +46,10 @@ namespace Compiler
             {"set", ClassPart.SET},
 
             //Data Types
-            { "int",ClassPart.INT },
-            { "string",ClassPart.STRING },
-            { "double",ClassPart.DOUBLE },
-            { "bool", ClassPart.BOOL },
+            { "int",ClassPart.DATA_TYPE },
+            { "string",ClassPart.DATA_TYPE },
+            { "double",ClassPart.DATA_TYPE },
+            { "bool", ClassPart.DATA_TYPE },
         };
 
         public Dictionary<string, ClassPart> Punctuators { get; set; } = new Dictionary<string, ClassPart>()
@@ -57,6 +57,7 @@ namespace Compiler
             { ";", ClassPart.SEMI_COLON},
             { ":", ClassPart.COLON },
             { ",", ClassPart.COMMA },
+            { ".", ClassPart.DOT },
             { "(", ClassPart.OPENING_PARANTHESES },
             { ")", ClassPart.CLOSING_PARANTHESES },
             { "{", ClassPart.OPENING_CURLY_BRACKET },
@@ -71,33 +72,33 @@ namespace Compiler
         public Dictionary<string, ClassPart> Operators { get; set; } = new Dictionary<string, ClassPart>()
         {
             //Assignment Operators
-            {"+=",ClassPart.PLUS_EQUAL},
-            {"-=",ClassPart.MINUS_EQUAL},
-            {"/=",ClassPart.DIVIDE_EQUAL},
-            {"*=",ClassPart.DIVIDE_EQUAL},
-            {"%=",ClassPart.MODULUS_EQUAL},
+            {"+=",ClassPart.COMPOUND_EQUAL},
+            {"-=",ClassPart.COMPOUND_EQUAL},
+            {"/=",ClassPart.COMPOUND_EQUAL},
+            {"*=",ClassPart.COMPOUND_EQUAL},
+            {"%=",ClassPart.COMPOUND_EQUAL},
 
             //Increment/Decrement Operators
-            {"++",ClassPart.INCREMENT},
-            {"--",ClassPart.DECREMENT},
+            {"++",ClassPart.INCREMENT_DECREMENT},
+            {"--",ClassPart.INCREMENT_DECREMENT},
 
             //Arithmetic Operators
-            {"+",ClassPart.PLUS},
-            {"-",ClassPart.MINUS},
-            {"*",ClassPart.MULTIPLY},
-            {"/",ClassPart.DIVIDE},
-            {"%",ClassPart.MODULUS},
+            {"+",ClassPart.PLUS_MINUS},
+            {"-",ClassPart.PLUS_MINUS},
+            {"*",ClassPart.MULTIPLY_DIVIDE_MODULUS},
+            {"/",ClassPart.MULTIPLY_DIVIDE_MODULUS},
+            {"%",ClassPart.MULTIPLY_DIVIDE_MODULUS},
 
             //Logical Operators
             {"&&",ClassPart.AND},
             {"||",ClassPart.OR},
-            {"<=",ClassPart.LESS_EQUAL},
-            {">=",ClassPart.GREATER_EQUAL},
-            {"!=",ClassPart.NOT_EQUAL},
-            {"==",ClassPart.EQUAL_EQUAL},
+            {"<=",ClassPart.RELATIONAL_OPERATOR},
+            {">=",ClassPart.RELATIONAL_OPERATOR},
+            {"!=",ClassPart.RELATIONAL_OPERATOR},
+            {"==",ClassPart.RELATIONAL_OPERATOR},
             {"!",ClassPart.NOT},
-            {">",ClassPart.GREATER_EQUAL},
-            {"<",ClassPart.LESS_THAN},
+            {">",ClassPart.RELATIONAL_OPERATOR},
+            {"<",ClassPart.RELATIONAL_OPERATOR},
 
 
             //Equal
