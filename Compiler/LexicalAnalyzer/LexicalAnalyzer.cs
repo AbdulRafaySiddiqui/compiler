@@ -39,6 +39,10 @@ namespace Compiler
                 index += count;
                 text = text.Substring(count);
 
+                //if we are at the end of text
+                if (string.IsNullOrEmpty(text))
+                    break;
+
                 Token token;
 
                 //check keyword
@@ -120,7 +124,8 @@ namespace Compiler
         private string BreakWord(string text)
         {
             //check for work breakers and punctuators
-            for (int i = 0; i < text.Length; i++)
+            //start from index 1 cause we have already checked the punctuator and operator before, so they won't be present at start at least
+            for (int i = 1; i < text.Length; i++)
             {
                 if (Grammar.WordBreakers.Contains(text[i]) || Grammar.Punctuators.Keys.Contains(text[i].ToString()))
                 {
@@ -177,8 +182,20 @@ namespace Compiler
             {
                 if (text.StartsWith(op))
                 {
-                    var classPart = Grammar.Operators[op];
-                    token = new Token(classPart, op, lineNumber);
+                    //we only except plus and minus operator which have a space after them, cause we have to differentiate between +/- sign and operator
+                    if (text[0] == '+' || text[0] == '-')
+                    {
+                        if (text.Length > 1 && text[1] == ' ')
+                        {
+                            var classPart = Grammar.Operators[op];
+                            token = new Token(classPart, op, lineNumber);
+                        }
+                    }
+                    else
+                    {
+                        var classPart = Grammar.Operators[op];
+                        token = new Token(classPart, op, lineNumber);
+                    }
                 }
             }
             return token;
@@ -212,7 +229,7 @@ namespace Compiler
                 }
             }
             //if string is too short and incomplete
-            else if (text.Length < 2)
+            else if (text.StartsWith("\"") && text.Length < 2)
             {
                 token = new Token(ClassPart.INVALID, text, lineNumber);
             }
@@ -259,8 +276,8 @@ namespace Compiler
                         token = new Token(ClassPart.INVALID, text, lineNumber);
                 }
             }
-            //if string is too short and incomplete
-            else if (text.Length < 6)
+            //if text is too short and comment is incomplete i.e not closed
+            else if (text.StartsWith("/**") && text.Length < 6)
             {
                 token = new Token(ClassPart.INVALID, text, lineNumber);
             }
@@ -297,7 +314,7 @@ namespace Compiler
 
         private Token IsIdentifier(string word, int lineNumber)
         {
-            if (Regex.Match(word, "^[_]?[A-Za-z]|[A-Za-z0-9]+$").Success)
+            if (Regex.Match(word, "^[_]?[A-Za-z]+[A-Za-z0-9]*$").Success)
             {
                 return new Token(ClassPart.IDENTIFIER, word, lineNumber);
             }
