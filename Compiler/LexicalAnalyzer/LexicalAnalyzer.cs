@@ -182,10 +182,10 @@ namespace Compiler
             {
                 if (text.StartsWith(op))
                 {
-                    //we only except plus and minus operator which have a space after them, cause we have to differentiate between +/- sign and operator
+                    //we only except plus and minus operator which don't have a dot or number after them, cause we have to differentiate between +/- sign and operator
                     if (text[0] == '+' || text[0] == '-')
                     {
-                        if (text.Length > 1 && text[1] == ' ')
+                        if (text[1] != '.' && !Regex.Match(text[1].ToString(), "^[0-9]$").Success)
                         {
                             var classPart = Grammar.Operators[op];
                             token = new Token(classPart, op, lineNumber);
