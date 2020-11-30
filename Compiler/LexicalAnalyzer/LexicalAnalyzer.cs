@@ -256,28 +256,27 @@ namespace Compiler
                 }
             }
             //for multi line comment
-            else if (text.StartsWith("/**") && text.Length > 5)
+            else if (text.StartsWith("/*") && text.Length > 4)
             {
-                for (int i = 3; i < text.Length - 2; i++)
+                for (int i = 2; i < text.Length - 1; i++)
                 {
                     if (text[i] == '\n')
                     {
                         lineCount++;
-                        continue;
                     }
                     //find the end of multi line comment
-                    if (text[i] == '*' && text[i + 1] == '*' && text[i + 2] == '/')
+                    if (text[i] == '*' && text[i + 1] == '/')
                     {
                         token = new Token(ClassPart.MULTI_LINE_COMMENT, text.Substring(0, i + 1), lineNumber + lineCount);
                         break;
                     }
                     //if text ends and we don't find the closing comment tag
-                    if (i == text.Length - 3)
+                    if (i == text.Length - 2)
                         token = new Token(ClassPart.INVALID, text, lineNumber);
                 }
             }
             //if text is too short and comment is incomplete i.e not closed
-            else if (text.StartsWith("/**") && text.Length < 6)
+            else if (text.StartsWith("/*") && text.Length < 5)
             {
                 token = new Token(ClassPart.INVALID, text, lineNumber);
             }
