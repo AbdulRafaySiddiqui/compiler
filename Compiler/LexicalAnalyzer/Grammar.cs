@@ -16,28 +16,25 @@ namespace Compiler
             '\r'
         };
 
+        //Order is IMPORTANT
         public Dictionary<string, ClassPart> Keywords { get; set; } = new Dictionary<string, ClassPart>()
         {
             {"break", ClassPart.BREAK},
             {"continue", ClassPart.CONTINUE},
-            {"do",  ClassPart.DO },
             {"class", ClassPart.CLASS},
             {"catch", ClassPart.CATCH},
             {"else", ClassPart.ELSE },
-            //{"false", ClassPart.FALSE},
             {"default", ClassPart.DEFAULT},
-            //{"true", ClassPart.TRUE},
             {"if",   ClassPart.IF},
-            {"for",  ClassPart.FOR},
+            {"foreach",ClassPart.FOREACH },
             {"finally", ClassPart.FINALLY},
+            {"for",  ClassPart.FOR},
             {"using", ClassPart.USING},
             {"namespace" , ClassPart.NAMESPACE},
             {"new",  ClassPart.NEW},
-            {"foreach",ClassPart.FOREACH },
             {"void", ClassPart.VOID},
             {"try",  ClassPart.TRY},
             {"return",ClassPart.RETURN},
-            {"in",   ClassPart.IN},
             {"get",  ClassPart.GET},
             {"static",ClassPart.STATIC},
             {"null", ClassPart.NULL},
@@ -50,6 +47,10 @@ namespace Compiler
             { "string",ClassPart.DATA_TYPE },
             { "double",ClassPart.DATA_TYPE },
             { "bool", ClassPart.DATA_TYPE },
+
+
+            {"do",  ClassPart.DO },
+            {"in",   ClassPart.IN},
         };
 
         public Dictionary<string, ClassPart> Punctuators { get; set; } = new Dictionary<string, ClassPart>()

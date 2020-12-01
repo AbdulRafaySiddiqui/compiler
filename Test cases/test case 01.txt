@@ -1,0 +1,20 @@
+using System;
+
+public class LoanEvaluation
+{
+    public static int Main()
+    {
+        double principal = 0.00d;
+        
+        Console.Title = "Watts A Loan?";
+        
+        Console.WriteLine("============================");
+        Console.WriteLine("Loan Summary");
+        Console.WriteLine("=--------------------------=");
+        Console.WriteLine("Principal:       {0:F}", principal);
+        Console.WriteLine("============================");
+
+        System.Console.ReadKey();
+        return 0;
+    }
+}

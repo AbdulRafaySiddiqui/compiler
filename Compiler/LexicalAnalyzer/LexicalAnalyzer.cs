@@ -72,9 +72,9 @@ namespace Compiler
                 {
                     //now we have to break the word in order to validate it as arithmetic operators or identifier
                     var word = BreakWord(text);
-                    token = IsInt(word, line);
+                    token = IsDouble(word, line);
                     if (token == null)
-                        token = IsDouble(word, line);
+                        token = IsInt(word, line);
                     if (token == null)
                         token = IsBool(word, line);
                     if (token == null)
@@ -128,7 +128,9 @@ namespace Compiler
             {
                 if (Grammar.WordBreakers.Contains(text[i]) || Grammar.Punctuators.Keys.Contains(text[i].ToString()))
                 {
-                    return text.Substring(0, i);
+                    //if word breaker is a dot make sure the word is not a double
+                    if (text[i] != '.' || (text[i] == '.' && !Regex.Match(text[i + 1].ToString(), "^[0-9]$").Success))
+                        return text.Substring(0, i);
                 }
                 else
                 {
@@ -151,7 +153,8 @@ namespace Compiler
             Token token = null;
             foreach (var keyword in Grammar.Keywords.Keys)
             {
-                if (text.StartsWith(keyword))
+                //check if text starts with keyword and the keyword not end with any alphabet or digit
+                if (text.StartsWith(keyword) && (text.Length == keyword.Length || !Regex.Match(text.Substring(keyword.Length, 1), "^[A-Za-z0-9]+$").Success))
                 {
                     var classPart = Grammar.Keywords[keyword];
                     token = new Token(classPart, keyword, lineNumber);
@@ -264,7 +267,7 @@ namespace Compiler
                 {
                     if (text[i] == '\n')
                     {
-                        token = new Token(ClassPart.SINGLE_LINE_COMMENT, text.Substring(0, i + 1), lineNumber);
+                        token = new Token(ClassPart.SINGLE_LINE_COMMENT, text.Substring(0, i), lineNumber);
                         lineCount++;
                         break;
                     }
@@ -282,7 +285,7 @@ namespace Compiler
                     //find the end of multi line comment
                     if (text[i] == '*' && text[i + 1] == '/')
                     {
-                        token = new Token(ClassPart.MULTI_LINE_COMMENT, text.Substring(0, i + 1), lineNumber + lineCount);
+                        token = new Token(ClassPart.MULTI_LINE_COMMENT, text.Substring(0, i + 2), lineNumber + lineCount);
                         break;
                     }
                     //if text ends and we don't find the closing comment tag
@@ -310,7 +313,7 @@ namespace Compiler
 
         private Token IsDouble(string word, int lineNumber)
         {
-            if (Regex.Match(word, "^[+-]?[0-9]*.[0-9]+$").Success)
+            if (Regex.Match(word, "^[+-]?[0-9]*[.][0-9]+[d]?$").Success)
             {
                 return new Token(ClassPart.DOUBLE_CONSTANT, word, lineNumber);
             }
@@ -328,7 +331,7 @@ namespace Compiler
 
         private Token IsIdentifier(string word, int lineNumber)
         {
-            if (Regex.Match(word, "^[_]?[A-Za-z]+[_]*[A-Za-z0-9]*[_]*$").Success)
+            if (Regex.Match(word, "^[_]?[A-Za-z]+([_]*[A-Za-z0-9]*)*[_]*$").Success)
             {
                 return new Token(ClassPart.IDENTIFIER, word, lineNumber);
             }

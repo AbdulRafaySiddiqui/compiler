@@ -1,0 +1,5 @@
+/* string a = "ah//[]mer"//ahmer*/
+int a =0[]{}||;
+bool = true ;
+float = + 0.6 
+.,/.,
