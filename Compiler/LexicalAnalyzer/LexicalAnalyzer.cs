@@ -81,7 +81,6 @@ namespace Compiler
                         token = IsIdentifier(word, line);
                     if (token == null)
                         token = new Token(ClassPart.INVALID, word, line);
-
                 }
 
 
@@ -156,6 +155,7 @@ namespace Compiler
                 {
                     var classPart = Grammar.Keywords[keyword];
                     token = new Token(classPart, keyword, lineNumber);
+                    break;
                 }
             }
             return token;
@@ -174,13 +174,14 @@ namespace Compiler
                         if (text.Length > 1 && !Regex.Match(text[1].ToString(), "^[0-9]$").Success)
                         {
                             token = new Token(Grammar.Punctuators[punctuator], punctuator, lineNumber);
-                            return token;
+                            break;
                         }
                     }
                     else
                     {
                         var classPart = Grammar.Punctuators[punctuator];
                         token = new Token(classPart, punctuator, lineNumber);
+                        break;
                     }
                 }
             }
@@ -195,18 +196,20 @@ namespace Compiler
                 if (text.StartsWith(op))
                 {
                     //we only except plus and minus operator which don't have a dot or number after them, cause we have to differentiate between +/- sign and operator
-                    if (text[0] == '+' || text[0] == '-')
+                    if (op == "+" || op == "-")
                     {
                         if (text[1] != '.' && !Regex.Match(text[1].ToString(), "^[0-9]$").Success)
                         {
                             var classPart = Grammar.Operators[op];
                             token = new Token(classPart, op, lineNumber);
+                            break;
                         }
                     }
                     else
                     {
                         var classPart = Grammar.Operators[op];
                         token = new Token(classPart, op, lineNumber);
+                        break;
                     }
                 }
             }
