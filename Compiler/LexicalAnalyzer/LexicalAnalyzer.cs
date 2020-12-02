@@ -271,6 +271,11 @@ namespace Compiler
                         lineCount++;
                         break;
                     }
+                    //if we couldn't find a line break means its the end of string
+                    if (i == text.Length - 1)
+                    {
+                        token = new Token(ClassPart.SINGLE_LINE_COMMENT, text, lineNumber);
+                    }
                 }
             }
             //for multi line comment
