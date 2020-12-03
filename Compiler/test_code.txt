@@ -1,1 +1,8 @@
-//COMPILER//
+"hello\bye"
+"hello
+bye"
+"hello\nbye"
+"hello\rbye"
+"hello\tbye"
+"hello\\bbye"
+"\]"
