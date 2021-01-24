@@ -153,7 +153,7 @@ namespace Compiler
             foreach (var keyword in Grammar.Keywords.Keys)
             {
                 //check if text starts with keyword and the keyword not end with any alphabet or digit
-                if (text.StartsWith(keyword) && (text.Length == keyword.Length || !Regex.Match(text.Substring(keyword.Length, 1), "^[A-Za-z0-9]+$").Success))
+                if (text.StartsWith(keyword) && (text.Length == keyword.Length || text.Substring(keyword.Length, 1) == " ")) //!Regex.Match(text.Substring(keyword.Length, 1), "^[A-Za-z0-9]+$").Success)
                 {
                     var classPart = Grammar.Keywords[keyword];
                     token = new Token(classPart, keyword, lineNumber);

@@ -19,9 +19,13 @@
         public string Value { get; set; }
         public int LineNumber { get; set; }
 
+        public string ToCSVString()
+        {
+            return $"{LineNumber},{ClassPart},{Value}\r\n";
+        }
         public override string ToString()
         {
-            return $"CLASS PART: {ClassPart.ToString()}\r\nVALUE: {Value}\r\nLINE NUMBER: {LineNumber}\r\n";
+            return $"LINE NUMBER: {LineNumber}\t\tCLASS PART: {ClassPart}\t\t\t\t\t\tVALUE: {Value}\r\n";
         }
     }
 }
