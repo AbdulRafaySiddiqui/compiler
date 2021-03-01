@@ -25,7 +25,7 @@
         }
         public override string ToString()
         {
-            return $"LINE NUMBER: {LineNumber}\t\tCLASS PART: {ClassPart}\t\t\t\t\t\tVALUE: {Value}\r\n";
+            return $"LINE NUMBER: {LineNumber}\t\tCLASS PART: {ClassPart}\t\t\tVALUE: {Value}\r\n";
         }
     }
 }

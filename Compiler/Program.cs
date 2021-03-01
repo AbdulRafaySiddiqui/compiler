@@ -8,9 +8,6 @@ namespace Compiler
     {
         static void Main(string[] args)
         {
-            //Console.Write("ENTER SOURCE CODE PATH: ");
-            //var path = @"C:\Users\Dell\source\repos\Compiler\test_code.txt";
-
             string testFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"test_code.txt");
             string outputFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"output.txt");
             string outputFileCsv = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"output.csv");
@@ -20,19 +17,27 @@ namespace Compiler
             var lexicalAnalyzer = new LexicalAnalyzer();
             var tokens = lexicalAnalyzer.Analyze(sourceCode);
 
-            var fileText = "LINE NUMBER,CLASS NAME,VALUE\r\n";
-            foreach (var token in tokens)
-            {
-                fileText += token.ToCSVString();
-            }
-            File.WriteAllText(outputFileCsv, fileText);
-            fileText = "";
-            foreach (var token in tokens)
-            {
-                fileText += token.ToString();
-            }
-            File.WriteAllText(outputFile, fileText);
+            //Write to file
+            //var fileText = "LINE NUMBER,CLASS NAME,VALUE\r\n";
+            //foreach (var token in tokens)
+            //{
+            //    fileText += token.ToCSVString();
+            //}
+            //File.WriteAllText(outputFileCsv, fileText);
+            //fileText = "";
+            //foreach (var token in tokens)
+            //{
+            //    fileText += token.ToString();
+            //}
+            //File.WriteAllText(outputFile, fileText);
 
+            //Print to console
+            foreach (var token in tokens)
+            {
+                Console.WriteLine(token.ToString());
+            }
+
+            Console.ReadLine();
         }
     }
 }

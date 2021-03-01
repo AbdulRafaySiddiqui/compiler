@@ -13,7 +13,10 @@ namespace Compiler
             ' ',
             '\n',
             '\t',
-            '\r'
+            '\r',
+            '.',
+            '"',
+            '\''
         };
 
         //Order is IMPORTANT

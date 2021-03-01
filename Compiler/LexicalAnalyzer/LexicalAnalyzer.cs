@@ -123,23 +123,41 @@ namespace Compiler
         {
             //check for work breakers and punctuators
             //start from index 1 cause we have already checked the punctuator and operator before, so they won't be present at start at least
-            for (int i = 1; i < text.Length; i++)
+            if (Regex.Match(text.First().ToString(), "^[0-9]$").Success
+                || (text.Length > 1 && text[0] == '.'
+                && Regex.Match(text[1].ToString(), "^[0-9]$").Success))
             {
-                if (Grammar.WordBreakers.Contains(text[i]) || Grammar.Punctuators.Keys.Contains(text[i].ToString()))
+                //only accepts 1 dot (for double only)
+                int dotCount = 0;
+                for (int i = 1; i < text.Length; i++)
                 {
-                    //if word breaker is a dot make sure the word is not a double
-                    if (text[i] != '.' || (text[i] == '.' && !Regex.Match(text[i + 1].ToString(), "^[0-9]$").Success))
-                        return text.Substring(0, i);
-                }
-                else
-                {
-                    //check for operators
-                    foreach (var op in Grammar.Operators.Keys)
+                    if (text[i] == '.') dotCount++;
+                    if (!Regex.Match(text[i].ToString(), "^[0-9]$").Success || (text[i] == '.' && dotCount == 2))
                     {
-                        //match the operators
-                        if (text.Substring(i).StartsWith(op))
+                        return text.Substring(0, i);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 1; i < text.Length; i++)
+                {
+                    if (Grammar.WordBreakers.Contains(text[i]) || Grammar.Punctuators.Keys.Contains(text[i].ToString()))
+                    {
+                        //if word breaker is a dot make sure the word is not a double
+                        //if (text[i] != '.' || (text[i] == '.' && !Regex.Match(text[i + 1].ToString(), "^[0-9]$").Success))
+                        return text.Substring(0, i);
+                    }
+                    else
+                    {
+                        //check for operators
+                        foreach (var op in Grammar.Operators.Keys)
                         {
-                            return text.Substring(0, i);
+                            //match the operators
+                            if (text.Substring(i).StartsWith(op))
+                            {
+                                return text.Substring(0, i);
+                            }
                         }
                     }
                 }
@@ -220,11 +238,40 @@ namespace Compiler
 
         private Token IsString(string text, int lineNumber)
         {
+
             Token token = null;
             //true when we find an invalid escape sequence \
             bool isInvalid = false;
             //if it starts with double quote, search for the ending quote 
             if (text.StartsWith("\"") && text.Length > 1)
+            {
+                for (int i = 1; i < text.Length; i++)
+                {
+                    if (text[i] == '\\')
+                    {
+                        //isInvalid = true;
+                    }
+                    //line break
+                    else if (text[i] == '\r' || text[i] == '\n')
+                    {
+                        //don't include the new line character in the value part
+                        token = new Token(ClassPart.INVALID, text.Substring(0, i), lineNumber);
+                        break;
+                    }
+                    //find the end of string and also deal the escape condition
+                    if (text[i] == '\"' && text[i - 1] != '\\')
+                    {
+                        if (isInvalid)
+                            return new Token(ClassPart.INVALID, text.Substring(0, i + 1), lineNumber);
+                        return new Token(ClassPart.STRING_CONSTANT, text.Substring(0, i + 1), lineNumber);
+                    }
+                    //if text ends and we don't find the ending quote for string, means string is not closed
+                    if (i == text.Length - 1)
+                        token = new Token(ClassPart.INVALID, text, lineNumber);
+                }
+            }
+            //if it starts with single quote, search for the ending single 
+            else if (text.StartsWith("\'") && text.Length > 1)
             {
                 for (int i = 1; i < text.Length; i++)
                 {
@@ -240,7 +287,7 @@ namespace Compiler
                         break;
                     }
                     //find the end of string and also deal the escape condition
-                    if (text[i] == '"' && text[i - 1] != '\\')
+                    if (text[i] == '\'' && text[i - 1] != '\\')
                     {
                         if (isInvalid)
                             return new Token(ClassPart.INVALID, text.Substring(0, i + 1), lineNumber);
@@ -252,7 +299,7 @@ namespace Compiler
                 }
             }
             //if string is too short and incomplete
-            else if (text.StartsWith("\"") && text.Length < 2)
+            else if ((text.StartsWith("\"") || text.StartsWith("'")) && text.Length < 2)
             {
                 token = new Token(ClassPart.INVALID, text, lineNumber);
             }
