@@ -29,6 +29,7 @@
         WHILE,
         PUBLIC,
         PRIVATE,
+        ABSTRACT,
 
         //DATA TYPES
         DATA_TYPE,

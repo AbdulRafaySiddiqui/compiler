@@ -40,6 +40,7 @@ namespace Compiler
             {"while",ClassPart.WHILE},
             {"public",ClassPart.PUBLIC},
             {"private",ClassPart.PRIVATE},
+            {"abstract",ClassPart.ABSTRACT},
 
             //Data Types
             { "int",ClassPart.DATA_TYPE },

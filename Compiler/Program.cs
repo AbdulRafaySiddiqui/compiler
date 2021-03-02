@@ -17,6 +17,18 @@ namespace Compiler
             var lexicalAnalyzer = new LexicalAnalyzer();
             var tokens = lexicalAnalyzer.Analyze(sourceCode);
 
+            var syntaxAnalyzer = new SyntaxAnalyzer();
+            var isValid = syntaxAnalyzer.Analyze(tokens);
+
+            if (isValid == null)
+            {
+                Console.WriteLine("Source code parsed Successfully!");
+            }
+            else
+            {
+                Console.WriteLine($"Error found on Line number {isValid}");
+            }
+
             //Write to file
             //var fileText = "LINE NUMBER,CLASS NAME,VALUE\r\n";
             //foreach (var token in tokens)
