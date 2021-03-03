@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System;
 
 namespace Compiler
 {
@@ -30,6 +31,7 @@ namespace Compiler
             int line = 1;
             string text = rawText;
             int lenth = rawText.Length;
+            int indexLength = 1;
             while (index < lenth)
             {
                 //Remove spaces,tabs and new line from front of string and increase the current index
@@ -171,7 +173,7 @@ namespace Compiler
             foreach (var keyword in Grammar.Keywords.Keys)
             {
                 //check if text starts with keyword and the keyword not end with any alphabet or digit
-                if (text.StartsWith(keyword) && (text.Length == keyword.Length || text.Substring(keyword.Length, 1) == " ")) //!Regex.Match(text.Substring(keyword.Length, 1), "^[A-Za-z0-9]+$").Success)
+                if (text.StartsWith(keyword) && (text.Length == keyword.Length || !Regex.Match(text.Substring(keyword.Length, 1), "^[a-zA-Z][a-zA-Z0-9]*$").Success)) //!Regex.Match(text.Substring(keyword.Length, 1), "^[A-Za-z0-9]+$").Success)
                 {
                     var classPart = Grammar.Keywords[keyword];
                     token = new Token(classPart, keyword, lineNumber);

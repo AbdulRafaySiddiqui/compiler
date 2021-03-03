@@ -29,11 +29,19 @@
         WHILE,
         PUBLIC,
         PRIVATE,
+        PROTECTED,
+        INTERNAL,
         ABSTRACT,
+        SEALED,
+        MAIN,
 
         //DATA TYPES
-        DATA_TYPE,
-       
+        //DATA_TYPE,
+        INTEGER,
+        STRING,
+        BOOL,
+        DOUBLE,
+
         //CONSTANTS
         INT_CONSTANT,
         DOUBLE_CONSTANT,
@@ -60,11 +68,15 @@
         MULTIPLY_DIVIDE_MODULUS,
 
         //ASSIGNMENT OPERATORS
-        COMPOUND_EQUAL,
+        COMPOUND_EQUAL_PLUS,
+        COMPOUND_EQUAL_MINUS,
+        COMPOUND_EQUAL_MULTIPLY,
+        COMPOUND_EQUAL_DIVIDE,
         EQUAL,
 
         //INCREMENT/DECREMENT OPERATOR
-        INCREMENT_DECREMENT,
+        INCREMENT_DECREMENT_PLUS,
+        INCREMENT_DECREMENT_MINUS,
 
         //LOGICAL OPERATOS
         AND,
@@ -75,5 +87,9 @@
         //COMMENTS
         SINGLE_LINE_COMMENT,
         MULTI_LINE_COMMENT,
+
+
+        //END MARKER
+        END_MARKER,
     }
 }

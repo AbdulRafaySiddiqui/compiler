@@ -1,3 +1,10 @@
+public class Hello{
+	public string prop {get;set;}
+
+	void go(){
+	}
+}
+
 void interface A_B_C:::abc.45abc
 if_else(a<<<<b!=54+++===!!!<>a54bv
 char ch="vsdfds\\a+== vdsds-=ds\*\"fsdsas

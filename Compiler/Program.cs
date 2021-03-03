@@ -18,15 +18,15 @@ namespace Compiler
             var tokens = lexicalAnalyzer.Analyze(sourceCode);
 
             var syntaxAnalyzer = new SyntaxAnalyzer();
-            var isValid = syntaxAnalyzer.Analyze(tokens);
+            var token = syntaxAnalyzer.Analyze(tokens);
 
-            if (isValid == null)
+            if (token == null)
             {
                 Console.WriteLine("Source code parsed Successfully!");
             }
             else
             {
-                Console.WriteLine($"Error found on Line number {isValid}");
+                Console.WriteLine($"Error! Invalid character \"{token.Value}\" found on Line number \"{token.LineNumber}\"");
             }
 
             //Write to file
@@ -44,9 +44,9 @@ namespace Compiler
             //File.WriteAllText(outputFile, fileText);
 
             //Print to console
-            foreach (var token in tokens)
+            foreach (var t in tokens)
             {
-                Console.WriteLine(token.ToString());
+                Console.WriteLine(t.ToString());
             }
 
             Console.ReadLine();

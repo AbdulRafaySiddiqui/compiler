@@ -41,12 +41,16 @@ namespace Compiler
             {"public",ClassPart.PUBLIC},
             {"private",ClassPart.PRIVATE},
             {"abstract",ClassPart.ABSTRACT},
+            {"sealed", ClassPart.SEALED},
+            {"protected", ClassPart.PROTECTED},
+            {"internal", ClassPart.INTERNAL},
+            {"Main", ClassPart.MAIN},
 
             //Data Types
-            { "int",ClassPart.DATA_TYPE },
-            { "string",ClassPart.DATA_TYPE },
-            { "double",ClassPart.DATA_TYPE },
-            { "bool", ClassPart.DATA_TYPE },
+            { "int",ClassPart.INTEGER },
+            { "string",ClassPart.STRING },
+            { "double",ClassPart.DOUBLE },
+            { "bool", ClassPart.BOOL },
 
 
             {"do",  ClassPart.DO },
@@ -73,15 +77,15 @@ namespace Compiler
         public Dictionary<string, ClassPart> Operators { get; set; } = new Dictionary<string, ClassPart>()
         {
             //Assignment Operators
-            {"+=",ClassPart.COMPOUND_EQUAL},
-            {"-=",ClassPart.COMPOUND_EQUAL},
-            {"/=",ClassPart.COMPOUND_EQUAL},
-            {"*=",ClassPart.COMPOUND_EQUAL},
-            {"%=",ClassPart.COMPOUND_EQUAL},
+            {"+=",ClassPart.COMPOUND_EQUAL_PLUS},
+            {"-=",ClassPart.COMPOUND_EQUAL_MINUS},
+            {"/=",ClassPart.COMPOUND_EQUAL_DIVIDE},
+            {"*=",ClassPart.COMPOUND_EQUAL_MULTIPLY},
+            
 
             //Increment/Decrement Operators
-            {"++",ClassPart.INCREMENT_DECREMENT},
-            {"--",ClassPart.INCREMENT_DECREMENT},
+            {"++",ClassPart.INCREMENT_DECREMENT_PLUS},
+            {"--",ClassPart.INCREMENT_DECREMENT_MINUS},
 
             //Arithmetic Operators
             {"+",ClassPart.PLUS_MINUS},
@@ -104,6 +108,9 @@ namespace Compiler
 
             //Equal
             {"=",ClassPart.EQUAL},
+
+            //End Marker
+            {"$", ClassPart.END_MARKER},
         };
     }
 }
